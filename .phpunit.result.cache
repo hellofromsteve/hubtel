@@ -1,1 +1,0 @@
-{"version":2,"defects":[],"times":{"HelloFromSteve\\Hubtel\\Tests\\Feature\\HubtelServiceTest::test_it_can_initialize_payment_with_default_config_urls":0.018,"HelloFromSteve\\Hubtel\\Tests\\Feature\\HubtelServiceTest::test_it_throws_error_on_failed_request":0.001}}
