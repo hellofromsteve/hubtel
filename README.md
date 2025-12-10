@@ -84,12 +84,7 @@ $transaction = paystack('initializeTransaction', [
 ]);
 ```
 
-### Using Dependency Injection
 
-```php
-
-
-```
 
 ## Available Methods
 
