@@ -1,0 +1,44 @@
+{
+    "name": "hellofromsteve/hubtel",
+    "description": "A Laravel Package for Hubtel payment integration for laravel 11 and above",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Stephen Asare",
+            "email": "stephen@solentik.com"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "illuminate/support": "^11.0|^12.0",
+        "illuminate/http": "^11.0|^12.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^10.8",
+        "phpunit/phpunit": "^12.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "HelloFromSteve\\Hubtel\\": "src/"
+        },
+        "files": [
+            "src/helpers.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "HelloFromSteve\\Hubtel\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "HelloFromSteve\\Hubtel\\HubtelServiceProvider"
+            ]
+        },
+        "branch-alias": {}
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

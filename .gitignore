@@ -1,0 +1,11 @@
+/vendor/
+composer.lock
+.idea/
+.vscode/
+.DS_Store
+*.log
+
+.env
+.env.testing
+/storage/
+/node_modules/
