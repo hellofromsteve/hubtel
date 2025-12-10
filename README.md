@@ -27,7 +27,7 @@ HUBTEL_RETURN_URL=your_return_url_here
 HUBTEL_CANCELLED_URL=your_cancelled_url_here
 HUBTEL_INITIATE_URL=optional_here(initiate transaction)
 HUBTEL_STATUS_URL=optional_here_(check transaction status)
-PAYSTACK_URL=https://api.paystack.co
+
 ```
 
 ### You can set the endpoints in the config after publishing there
