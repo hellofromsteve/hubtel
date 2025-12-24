@@ -50,6 +50,9 @@ return [
     |
     */
     'callback_url' => env('HUBTEL_CALLBACK_URL', 'https://your-callback-url.com'),
+    
+
+    'local_callback_url' => env('LOCAL_HUBTEL_CALLBACK_URL'),
 
 
     'return_url' => env('HUBTEL_RETURN_URL', 'https://your-return-url.com'),

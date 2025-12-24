@@ -62,11 +62,16 @@ class HubtelService
         $url = config('hubtel.endpoints.initiate');
 
         // 2. Merge defaults (same as before)
+      $callbackUrl = (app()->environment('local') && config('hubtel.local_callback_url'))
+        ? config('hubtel.local_callback_url')
+        : config('hubtel.callback_url');
+
+        // 3. Merge defaults
         $defaults = [
-            'callbackUrl'           => config('hubtel.callback_url'),
+            'callbackUrl'           => $callbackUrl,
             'returnUrl'             => config('hubtel.return_url'),
             'cancellationUrl'       => config('hubtel.cancelled_url'),
-            'merchantAccountNumber' => config('hubtel.merchant_account_number'),
+            'merchantAccountNumber' => config('hubtel.merchant_account_id'), 
             'clientReference'       => (string) \Illuminate\Support\Str::uuid(),
         ];
 

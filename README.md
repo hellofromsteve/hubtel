@@ -19,14 +19,17 @@ php artisan vendor:publish --tag=hubtel-config
 Add your hubtel credentials to your `.env` file:
 
 ```env
-HUBTEL_API_KEY=your_api_username_here
-HUBTEL_API_SECRET=your_api_password_here
-HUBTEL_MERCHANT_ACCOUNT_ID=your_hubtel_merchand_pos_id_here
-HUBTEL_CALLBACK_URL=your_callback_url_here
-HUBTEL_RETURN_URL=your_return_url_here
-HUBTEL_CANCELLED_URL=your_cancelled_url_here
-HUBTEL_INITIATE_URL=optional_here(initiate transaction)
-HUBTEL_STATUS_URL=optional_here_(check transaction status)
+HUBTEL_API_KEY=************
+HUBTEL_API_SECRET=****************
+HUBTEL_MERCHANT_ACCOUNT_ID=**************
+
+# Local Testing Callback
+LOCAL_HUBTEL_CALLBACK_URL="(can you webhook.site to get a url for local testing)"
+
+#Recommended
+HUBTEL_CALLBACK_URL="${APP_URL}/payment/callback"
+HUBTEL_RETURN_URL="${APP_URL}/payment/return"
+HUBTEL_CANCELLED_URL="${APP_URL}/payment/cancel"
 
 ```
 
