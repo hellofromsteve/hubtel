@@ -24,7 +24,7 @@ HUBTEL_API_SECRET=****************
 HUBTEL_MERCHANT_ACCOUNT_ID=**************
 
 # Local Testing Callback
-LOCAL_HUBTEL_CALLBACK_URL="(can you webhook.site to get a url for local testing)"
+LOCAL_HUBTEL_CALLBACK_URL="(you can use webhook.site to get a url for local testing)"
 
 #Recommended
 HUBTEL_CALLBACK_URL="${APP_URL}/payment/callback"
@@ -73,19 +73,7 @@ $transaction = hubtel()->initialize([
 
 
 
-```
 
-
-```php
-// Or pass methods directly
-
-$plans = paystack('getPlans');
-
-$transaction = paystack('initializeTransaction', [
-    'email' => 'stephen@solentik.com',
-    'amount' => 10000, // amount in the lowest form of currency (pesewas/kobo)
-]);
-```
 
 
 
