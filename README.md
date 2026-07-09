@@ -1,6 +1,6 @@
 # Laravel Hubtel Package
 
-A simple  Laravel package for integrating Hubtel payments into your Laravel 11 and Above application.
+A simple Laravel package for integrating Hubtel payments into your Laravel 11, 12, and 13 application.
 
 ## Installation
 
@@ -21,7 +21,7 @@ Add your hubtel credentials to your `.env` file:
 ```env
 HUBTEL_API_KEY=************
 HUBTEL_API_SECRET=****************
-HUBTEL_MERCHANT_ACCOUNT_ID=**************
+HUBTEL_MERCHANT_ACCOUNT_NUMBER=**************
 
 # Local Testing Callback
 LOCAL_HUBTEL_CALLBACK_URL="(you can use webhook.site to get a url for local testing)"

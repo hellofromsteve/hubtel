@@ -1,6 +1,6 @@
 {
     "name": "hellofromsteve/hubtel",
-    "description": "A Laravel Package for Hubtel payment integration for laravel 11 and above",
+    "description": "A Laravel Package for Hubtel payment integration for Laravel 11, 12, and 13",
     "type": "library",
     "license": "MIT",
     "authors": [
@@ -11,11 +11,11 @@
     ],
     "require": {
         "php": "^8.1",
-        "illuminate/support": "^11.0|^12.0",
-        "illuminate/http": "^11.0|^12.0"
+        "illuminate/support": "^11.0|^12.0|^13.0",
+        "illuminate/http": "^11.0|^12.0|^13.0"
     },
     "require-dev": {
-        "orchestra/testbench": "^10.8",
+        "orchestra/testbench": "^11.0",
         "phpunit/phpunit": "^12.0"
     },
     "autoload": {
