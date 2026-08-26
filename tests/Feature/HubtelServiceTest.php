@@ -43,6 +43,43 @@ class HubtelServiceTest extends HubtelTestCase
         });
     }
 
+    public function test_it_checks_transaction_status_by_hubtel_transaction_id()
+    {
+        Http::fake([
+            'api-txnstatus.hubtel.com/*' => Http::response([
+                'status' => 'Success',
+                'responseCode' => '0000',
+                'data' => ['status' => 'Paid'],
+            ]),
+        ]);
+
+        $response = app(HubtelService::class)->checkStatus('hubtel-123');
+
+        $this->assertSame('Paid', $response['data']['status']);
+        Http::assertSent(function ($request) {
+            return $request->method() === 'GET'
+                && $request->url() === 'https://api-txnstatus.hubtel.com/transactions/2010000/status?hubtelTransactionId=hubtel-123'
+                && $request->hasHeader('Authorization', 'Basic '.base64_encode('fake_key:fake_secret'));
+        });
+    }
+
+    public function test_it_checks_transaction_status_by_client_reference()
+    {
+        Http::fake([
+            'api-txnstatus.hubtel.com/*' => Http::response([
+                'status' => 'Success',
+                'responseCode' => '0000',
+                'data' => ['clientReference' => 'ORDER / 1', 'status' => 'Paid'],
+            ]),
+        ]);
+
+        app(HubtelService::class)->checkStatusByClientReference('ORDER / 1');
+
+        Http::assertSent(function ($request) {
+            return $request->url() === 'https://api-txnstatus.hubtel.com/transactions/2010000/status?clientReference=ORDER%20%2F%201';
+        });
+    }
+
     public function test_it_throws_error_on_failed_request()
     {
         // 1. Fake a 401 Unauthorized error

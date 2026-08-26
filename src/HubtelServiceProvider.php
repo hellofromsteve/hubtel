@@ -6,29 +6,20 @@ use Illuminate\Support\ServiceProvider;
 
 class HubtelServiceProvider extends ServiceProvider
 {
-    /**
-     * Register services.
-     */
     public function register(): void
     {
-        $this->mergeConfigFrom(
-            __DIR__.'/../config/hubtel.php',
-            'hubtel'
-        );
+        $this->mergeConfigFrom(__DIR__.'/../config/hubtel.php', 'hubtel');
 
-        $this->app->singleton(HubtelService::class, function ($app) {
-            return new HubtelService();
-        });
+        $this->app->singleton(HubtelService::class, fn () => new HubtelService());
+        $this->app->singleton(HubtelInvoiceService::class, fn () => new HubtelInvoiceService());
     }
 
-    /**
-     * Bootstrap services.
-     */
     public function boot(): void
     {
-        $this->publishes([
-            __DIR__.'/../config/hubtel.php' => config_path('hubtel.php'),
-        ], 'hubtel-config');
+        if ($this->app->runningInConsole()) {
+            $this->publishes([
+                __DIR__.'/../config/hubtel.php' => config_path('hubtel.php'),
+            ], 'hubtel-config');
+        }
     }
 }
-

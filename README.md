@@ -1,94 +1,66 @@
-# Laravel Hubtel Package
+# Laravel Hubtel
 
-A simple Laravel package for integrating Hubtel payments into your Laravel 11, 12, and 13 application.
+Hubtel hosted payments, transaction status, and invoicing for Laravel 11, 12, and 13.
+
+## Requirements
+
+- PHP 8.1+
+- Laravel 11, 12, or 13
 
 ## Installation
 
 ```bash
 composer require hellofromsteve/hubtel
+php artisan vendor:publish --tag=hubtel-config
 ```
 
 ## Configuration
 
-Publish the configuration file:
+```dotenv
+HUBTEL_API_KEY=your-application-key
+HUBTEL_API_SECRET=your-application-secret
+HUBTEL_MERCHANT_ACCOUNT_NUMBER=your-merchant-account-number
+HUBTEL_CALLBACK_URL=https://api.example.com/hubtel/callback
+HUBTEL_RETURN_URL=https://example.com/payment-complete
+HUBTEL_CANCELLED_URL=https://example.com/payment-cancelled
 
-```bash
-php artisan vendor:publish --tag=hubtel-config
+HUBTEL_INVOICE_API_ID=your-invoicing-api-id
+HUBTEL_INVOICE_API_KEY=your-invoicing-api-key
+HUBTEL_COLLECTION_ACCOUNT_NUMBER=11684
+HUBTEL_INVOICE_CALLBACK_URL=https://api.example.com/hubtel/invoices/callback
 ```
 
-Add your hubtel credentials to your `.env` file:
-
-```env
-HUBTEL_API_KEY=************
-HUBTEL_API_SECRET=****************
-HUBTEL_MERCHANT_ACCOUNT_NUMBER=**************
-
-# Local Testing Callback
-LOCAL_HUBTEL_CALLBACK_URL="(you can use webhook.site to get a url for local testing)"
-
-#Recommended
-HUBTEL_CALLBACK_URL="${APP_URL}/payment/callback"
-HUBTEL_RETURN_URL="${APP_URL}/payment/return"
-HUBTEL_CANCELLED_URL="${APP_URL}/payment/cancel"
-
-```
-
-### You can set the endpoints in the config after publishing there
-
-## Usage
-
-### Using the Helper Function
+## Hosted payments
 
 ```php
-
-
-// Or use helper function and chain methods directly
-hubtel()
-
-
-$transaction = hubtel()->initialize([
-   'totalAmount' => 100,
-   'description' => 'payment for service',
-
+$response = hubtel()->initialize([
+    'totalAmount' => 100,
+    'description' => 'Order ORD-123',
+    'clientReference' => 'ORD-123',
 ]);
 ```
 
-// These defaults are set in the initialize() method and then merged to your $payload
-
-// The can be overwritten 
+## Transaction status
 
 ```php
- $defaults = [
-            'callbackUrl'           => config('hubtel.callback_url'),
-            'returnUrl'             => config('hubtel.return_url'),
-            'cancellationUrl'       => config('hubtel.cancelled_url'),
-            'merchantAccountNumber' => config('hubtel.merchant_account_number'),
-            'clientReference'       => (string) \Illuminate\Support\Str::uuid(),
-        ];
-
-
+$byTransactionId = hubtel()->checkStatus('hubtel-transaction-id');
+$byReference = hubtel()->checkStatusByClientReference('ORD-123');
 ```
 
+> **IP whitelist required:** Status requests must originate from a stable public outbound IP whitelisted by Hubtel. Provide that IP to your Hubtel Retail Engineer before using transaction-status APIs.
+
+## Invoicing
+
 ```php
+$invoice = hubtel()->invoices()->create($payload);
+$repeatInvoice = hubtel()->invoices()->repeat($repeatPayload);
+$status = hubtel()->invoices()->checkStatus($invoiceId);
+```
 
+Invoicing uses separate API credentials and a collection account number. Invoice status checks have the same outbound-IP whitelist requirement.
 
-
-
-
-
-
-## Available Methods
-
-- `initialize(array $finalPayload)` - Initiate a payment
-- `status(array $payload)` - Get transaction status
-
-
-## More Methods
-More methods will be updated soon
-
-
+See `hubtel-docs` in the repository for complete Laravel and .NET documentation.
 
 ## License
 
 MIT
-
