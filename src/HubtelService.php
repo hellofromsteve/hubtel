@@ -34,6 +34,15 @@ class HubtelService
         return $response->json();
     }
 
+    /**
+     * Reads the merchant's Collection account number, falling back to the deprecated
+     * 'merchant_account_number' key for applications that published this config before it existed.
+     */
+    protected function collectionAccountNumber(): string
+    {
+        return (string) (config('hubtel.collection_account_number') ?: config('hubtel.merchant_account_number'));
+    }
+
     /** Initiate a Hubtel hosted-checkout payment. */
     public function initialize(array $payload = []): array
     {
@@ -45,7 +54,7 @@ class HubtelService
             'callbackUrl' => $callbackUrl,
             'returnUrl' => config('hubtel.return_url'),
             'cancellationUrl' => config('hubtel.cancelled_url'),
-            'merchantAccountNumber' => config('hubtel.merchant_account_number'),
+            'merchantAccountNumber' => $this->collectionAccountNumber(),
             'clientReference' => (string) Str::uuid(),
         ], $payload));
     }
@@ -76,11 +85,23 @@ class HubtelService
         return app(HubtelInvoiceService::class);
     }
 
+    /** Access Hubtel's separate Transfers API (Send Money, Send-to-Bank, balance transfers). */
+    public function transfers(): HubtelTransferService
+    {
+        return app(HubtelTransferService::class);
+    }
+
+    /** Access Hubtel's separate account-verification API (bank account and mobile money name lookup). */
+    public function verification(): HubtelVerificationService
+    {
+        return app(HubtelVerificationService::class);
+    }
+
     private function sendStatusRequest(array $query): array
     {
-        $accountNumber = trim((string) config('hubtel.merchant_account_number'));
+        $accountNumber = trim($this->collectionAccountNumber());
         if ($accountNumber === '') {
-            throw new InvalidArgumentException('A Hubtel merchant account number is required.');
+            throw new InvalidArgumentException('A Hubtel collection account number is required.');
         }
 
         $baseUrl = rtrim((string) config('hubtel.endpoints.status'), '/');

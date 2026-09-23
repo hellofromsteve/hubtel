@@ -80,6 +80,23 @@ class HubtelServiceTest extends HubtelTestCase
         });
     }
 
+    public function test_it_falls_back_to_deprecated_merchant_account_number_key()
+    {
+        config(['hubtel.collection_account_number' => null, 'hubtel.merchant_account_number' => '2010000']);
+
+        Http::fake([
+            'api-txnstatus.hubtel.com/*' => Http::response([
+                'status' => 'Success',
+                'responseCode' => '0000',
+                'data' => ['status' => 'Paid'],
+            ]),
+        ]);
+
+        app(HubtelService::class)->checkStatus('hubtel-123');
+
+        Http::assertSent(fn ($request) => $request->url() === 'https://api-txnstatus.hubtel.com/transactions/2010000/status?hubtelTransactionId=hubtel-123');
+    }
+
     public function test_it_throws_error_on_failed_request()
     {
         // 1. Fake a 401 Unauthorized error

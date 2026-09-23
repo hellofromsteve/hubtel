@@ -12,6 +12,8 @@ class HubtelServiceProvider extends ServiceProvider
 
         $this->app->singleton(HubtelService::class, fn () => new HubtelService());
         $this->app->singleton(HubtelInvoiceService::class, fn () => new HubtelInvoiceService());
+        $this->app->singleton(HubtelTransferService::class, fn () => new HubtelTransferService());
+        $this->app->singleton(HubtelVerificationService::class, fn () => new HubtelVerificationService());
     }
 
     public function boot(): void

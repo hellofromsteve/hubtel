@@ -1,6 +1,6 @@
 {
     "name": "hellofromsteve/hubtel",
-    "description": "Hubtel hosted payments, transaction status, and invoicing for Laravel 11, 12, and 13",
+    "description": "Hubtel hosted payments, transaction status, invoicing, transfers, and account verification for Laravel 11, 12, and 13",
     "type": "library",
     "license": "MIT",
     "authors": [
